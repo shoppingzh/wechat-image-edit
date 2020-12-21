@@ -59,6 +59,7 @@ export default {
       }
     },
     handleTouchLayer(e) {
+      e.preventDefault()
       if (this.mode && this.mode.name === 'draw') {
         const ctx = this.getImageLayerContext()
         const position = this.getLayerPosition(e)

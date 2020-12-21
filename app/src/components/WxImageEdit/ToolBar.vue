@@ -54,8 +54,9 @@ export default {
     bottom: 0;
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     height: @height;
-    line-height: @height;
+    // line-height: @height;
     padding: 0 10px;
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .9));
     &__item {
@@ -70,6 +71,7 @@ export default {
     &__right {
       flex: auto;
       text-align: right;
+      font-size: 0;
     }
   }
 </style>
