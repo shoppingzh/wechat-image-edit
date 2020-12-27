@@ -9,6 +9,16 @@
       <image-layer
         ref="imageLayer"
         :url="url" />
+      <Moveable
+        v-for="face in faces"
+        :key="face.id"
+        class="wx-image-edit__layer__face"
+        v-bind="{ draggable: true, resizable: true, zoom: 0.1 }"
+        @drag="handleFaceDrag"
+        @resize="handleFaceResize">
+        <img
+          :src="face.url">
+      </Moveable>
     </div>
     <transition name="fade" appear>
       <tool-bar
@@ -23,12 +33,14 @@
 import ImageLayer from './ImageLayer'
 import ToolBar from './ToolBar'
 import html2canvas from 'html2canvas'
+import Moveable from 'vue-moveable'
 
 export default {
   name: 'WxImageEdit',
   components: {
     ImageLayer,
-    ToolBar
+    ToolBar,
+    Moveable
   },
   props: {
     url: {
@@ -39,12 +51,24 @@ export default {
   data() {
     return {
       mode: null,
+      faces: [],
       show: {
         toolBar: true
       }
     }
   },
+  provide() {
+    return {
+      layer: this
+    }
+  },
   methods: {
+    addFace(url) {
+      this.faces.push({
+        id: +new Date() + Math.random(),
+        url
+      })
+    },
     handleModeChange(mode) {
       this.mode = mode
     },
@@ -94,6 +118,13 @@ export default {
           })
         })
       })
+    },
+    handleFaceDrag(e) {
+      e.target.style.transform = e.transform
+    },
+    handleFaceResize(e) {
+      e.target.style.width = `${e.width}px`
+      e.target.style.height = `${e.height}px`
     }
   }
 }
@@ -113,6 +144,17 @@ export default {
       width: 100%;
       position: relative;
       font-size: 0;
+      &__face {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 30%;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
     }
     canvas {
       background-color: rgba(orange, .5);

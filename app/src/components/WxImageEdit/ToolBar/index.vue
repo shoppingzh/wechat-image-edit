@@ -16,19 +16,22 @@
     <div v-if="currentMode" class="tool-bar__conf">
       <wx-color-select v-if="currentMode.name === 'draw'" v-model="currentMode.color" />
       <transition name="slideUp">
-        <div v-if="currentMode.name === 'face'" class="tool-bar__face-panel">
-          <div class="tool-bar__face-panel__head">
-            hello
-          </div>
-          <wx-face-select v-model="currentMode.url"  />
-        </div>
+        <face-select-panel v-if="currentMode.name === 'face'" @change="handleSelectFace"/>
       </transition>
     </div>
   </div>
 </template>
 
 <script>
+import FaceSelectPanel from './FaceSelectPanel'
+
 export default {
+  components: {
+    FaceSelectPanel
+  },
+  inject: [
+    'layer'
+  ],
   data() {
     return {
       currentMode: null,
@@ -52,6 +55,10 @@ export default {
     handleModeChange(mode) {
       this.currentMode = this.currentMode === mode ? null : mode
       this.$emit('mode-change', this.currentMode)
+    },
+    handleSelectFace(url) {
+      this.layer.addFace(url)
+      this.handleModeChange(null)
     }
   }
 }
@@ -99,19 +106,6 @@ export default {
       padding: 10px;
     }
 
-    // 表情面板
-    &__face-panel {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 40%;
-      border-radius: 10px 10px 0 0;
-      overflow: hidden;
-      &__head {
-        background-color: rgba(0, 0, 0, .85);
-      }
-    }
   }
 
   .slideUp-enter-active, .slideUp-leave-active {
