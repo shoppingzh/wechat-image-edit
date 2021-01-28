@@ -14,21 +14,21 @@
 
 <script>
 
-// const items = [
-//   'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1809538645,1040307514&fm=26&gp=0.jpg'
-// ]
+// 加载所有表情
+const loader = require.context('@/assets/faces')
+const items = loader.keys().reduce((items, key) => {
+  items.push(loader(key))
+  return items
+}, [])
 
 export default {
   name: 'WxFaceSelect',
   data() {
     return {
-      items: []
+      items
     }
   },
   created() {
-    for (let i = 0; i < 100; i++) {
-      this.items.push('https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1809538645,1040307514&fm=26&gp=0.jpg')
-    }
   },
   methods: {
     handleSelect(item) {

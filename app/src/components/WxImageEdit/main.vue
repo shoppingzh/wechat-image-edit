@@ -13,7 +13,7 @@
         v-for="face in faces"
         :key="face.id"
         class="wx-image-edit__layer__face"
-        v-bind="{ draggable: true, resizable: true, zoom: 0.1 }"
+        v-bind="{ draggable: true, resizable: true, zoom: 0 }"
         @drag="handleFaceDrag"
         @resize="handleFaceResize">
         <img
@@ -140,10 +140,12 @@ export default {
     display: flex;
     align-items: center;
     background-color: rgba(0, 0, 0, .9);
+    // 图层
     &__layer {
       width: 100%;
       position: relative;
       font-size: 0;
+      overflow: hidden;
       &__face {
         position: absolute;
         left: 0;
