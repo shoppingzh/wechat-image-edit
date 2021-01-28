@@ -15,9 +15,9 @@
     </div>
     <div v-if="currentMode" class="tool-bar__conf">
       <wx-color-select v-if="currentMode.name === 'draw'" v-model="currentMode.color" />
-      <transition name="slideUp">
-        <face-select-panel v-if="currentMode.name === 'face'" @change="handleSelectFace"/>
-      </transition>
+      <face-select-panel
+        v-model="isFaceSelectActive"
+        @change="handleSelectFace"/>
     </div>
   </div>
 </template>
@@ -49,6 +49,16 @@ export default {
         { name: 'clip' },
         { name: 'mosaic' }
       ]
+    }
+  },
+  computed: {
+    isFaceSelectActive: {
+      get() {
+        return this.currentMode.name === 'face'
+      },
+      set() {
+        this.currentMode = null
+      }
     }
   },
   methods: {
