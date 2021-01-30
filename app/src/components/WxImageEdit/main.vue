@@ -13,16 +13,19 @@
         v-for="face in faces"
         :key="face.id"
         class="wx-image-edit__layer__face"
-        v-bind="{ draggable: true, resizable: true, zoom: 0 }"
+        v-bind="{ draggable: true, resizable: true, pinchable: true, zoom: 0 }"
         @drag="handleFaceDrag"
+        @pinch="handlePinch"
         @resize="handleFaceResize">
         <img
           :src="face.url">
       </Moveable>
     </div>
+    <div class="wx-image-edit__overlay" />
     <transition name="fade" appear>
       <tool-bar
         v-show="show.toolBar"
+        class="wx-image-edit__toolbar"
         @mode-change="handleModeChange"
         @done="handleDone" />
     </transition>
@@ -120,11 +123,16 @@ export default {
       })
     },
     handleFaceDrag(e) {
-      e.target.style.transform = e.transform
+      e.target.style.left = `${e.left}px`
+      e.target.style.top = `${e.top}px`
     },
-    handleFaceResize(e) {
-      e.target.style.width = `${e.width}px`
-      e.target.style.height = `${e.height}px`
+    handlePinch() {
+      // console.log(e)
+    },
+    handleFaceResize() {
+      // console.log(e)
+      // e.target.style.width = `${e.width}px`
+      // e.target.style.height = `${e.height}px`
     }
   }
 }
@@ -144,6 +152,7 @@ export default {
     &__layer {
       width: 100%;
       position: relative;
+      z-index: 50;
       font-size: 0;
       overflow: hidden;
       &__face {
@@ -154,12 +163,25 @@ export default {
         img {
           width: 100%;
           height: 100%;
-          object-fit: contain;
         }
       }
     }
     canvas {
       background-color: rgba(orange, .5);
+    }
+    // 遮罩层
+    &__overlay {
+      position: absolute;
+      z-index: 20;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, .9);
+    }
+    // 工具栏
+    &__toolbar {
+      z-index: 30;
     }
   }
 

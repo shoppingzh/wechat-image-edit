@@ -10,6 +10,7 @@ export default {
   methods: {
     handleSelectFile() {
       chooseFile().then(files => {
+        console.log(files)
         const url = URL.createObjectURL(files[0])
         this.$router.push({
           path: '/edit',

@@ -2,13 +2,15 @@ export function chooseFile() {
   return new Promise((resolve, reject) => {
     const el = document.createElement('input')
     el.type = 'file'
-    el.onchange = function() {
-      const files = this.files
+    el.style.display = 'none'
+    el.addEventListener('change', (e) => {
+      const files = e.target.files
       if (!files || !files.length) {
         return reject()
       }
       resolve(files)
-    }
+    })
+    document.body.appendChild(el)
     el.click()
   })
 }

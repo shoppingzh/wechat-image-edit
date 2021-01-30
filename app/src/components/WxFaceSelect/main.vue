@@ -48,6 +48,7 @@ export default {
     box-sizing: border-box;
     &:after {
       content: "";
+      display: table;
       visibility: hidden;
       clear: both;
     }
@@ -59,7 +60,10 @@ export default {
       padding-top: 20%;
       &__inner {
         position: absolute;
-        inset: 8px;
+        left: 4px;
+        right: 4px;
+        top: 4px;
+        bottom: 4px;
         img {
           width: 100%;
           height: 100%;
@@ -67,6 +71,5 @@ export default {
         }
       }
     }
-    
   }
 </style>
