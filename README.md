@@ -1,5 +1,7 @@
 # wechat-image-edit
 
+> 图片看不到请移步 [https://gitee.com/shoppingzh/wechat-image-edit](https://gitee.com/shoppingzh/wechat-image-edit)
+
 仿微信图片编辑
 
 ![](./images/preview.gif)
